@@ -1,0 +1,33 @@
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+/**
+ *
+ * @author sahil
+ */
+public class wire {
+    public static void main(String[] args) {
+	Scanner sc=new Scanner(System.in);
+        String s=sc.nextLine();
+        StringTokenizer st=new StringTokenizer(s);
+        int a[] =new int[st.countTokens()];
+        int i=0;
+        while(st.hasMoreTokens())
+        {
+            String k=st.nextToken();
+            a[i]=Integer.parseInt(k);
+            i++;
+        }
+        int sum=0;
+        for(int j=0;j<i;j++)
+        {
+            sum+=a[i];
+        }
+        if(sum%100 == 0)
+        {
+            System.out.println(sum/100);
+        }
+        else
+            System.out.println((sum/100)+1);
+	}
+}
