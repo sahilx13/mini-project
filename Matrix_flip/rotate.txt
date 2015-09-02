@@ -1,0 +1,248 @@
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+/**
+ *
+ * @author sahil
+ */
+public class rotation {
+    public static int a[][]=new int[10][10];
+    public static int cp[]=new int[100];
+    public static void rotate(int i,int sz,int b)
+    {
+        int m=0,n=0;
+        for(m=0;m<sz;m++)
+        {
+            for(n=0;n<sz;n++)
+                a[m][n]=0;
+        }
+        int ic=0;
+        int k=0;
+        if(i==1)
+        {
+            m=0;n=1;ic=0;
+            int ph=0;
+            while(k<(sz*sz))
+            {
+               
+                if(ph==0)
+                {
+                    a[m][n]=cp[k];
+                    k++;
+                    n++;
+                    if(n==(sz-ic))
+                    {
+                        ph++;
+                        m++;
+                        n--;
+                    }
+                }
+                else if(ph==1)
+                {
+                    a[m][n]=cp[k];
+                    k++;
+                    m++;
+                    if(m==(sz-ic))
+                    {
+                        ph++;
+                        m--;
+                        n--;
+                    }
+                }
+                else if(ph==2)
+                {
+                    a[m][n]=cp[k];
+                    k++;
+                    n--;
+                    if(n==ic-1)
+                    {
+                        ph++;
+                        m--;
+                        n++;
+                    }
+                }
+                else if(ph==3)
+                {
+                    a[m][n]=cp[k];
+                    k++;
+                    m--;
+                    if(m==ic-1)
+                    {
+                        ph=0;
+                        ic++;
+                        m=ic;
+                        n=ic+1;
+                    }
+                }
+                 if(b==1 && k==((sz*sz)-1))
+                {
+                    a[sz/2][sz/2]=cp[k];
+                    k++;
+                }
+            }
+        }
+        else
+        {
+             m=1;n=0;ic=0;
+            int ph=-1;
+            while(k<(sz*sz))
+            {
+                if(ph==-1)
+                {
+                    a[m][n]=cp[k];
+                    k++;
+                    m--;
+                    if(m==ic)
+                    {
+                        ph++;
+                    }
+                }
+                else if(ph==0)
+                {
+                    a[m][n]=cp[k];
+                    k++;
+                    n++;
+                    if(n==(sz-ic))
+                    {
+                        ph++;
+                        m++;
+                        n--;
+                    }
+                }
+                else if(ph==1)
+                {
+                    a[m][n]=cp[k];
+                    k++;
+                    m++;
+                    if(m==(sz-ic))
+                    {
+                        ph++;
+                        m--;
+                        n--;
+                    }
+                }
+                else if(ph==2)
+                {
+                    a[m][n]=cp[k];
+                    k++;
+                    n--;
+                    if(n==ic-1)
+                    {
+                        ph++;
+                        m--;
+                        n++;
+                    }
+                }
+                else if(ph==3)
+                {
+                    a[m][n]=cp[k];
+                    k++;
+                    m--;
+                    if(m==ic+1)
+                    {
+                        ph=-1;
+                        ic++;
+                        m=ic+1;
+                        n=ic;
+                    }
+                }
+                 if(b==1 && k==((sz*sz)-1))
+                {
+                    a[sz/2][sz/2]=cp[k];
+                    k++;
+                }
+            }
+        }
+    }
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner(System.in);
+        String s=sc.nextLine();
+        String op=sc.nextLine();
+        int sz=Integer.parseInt(s);
+        for(int i=0;i<sz;i++)
+        {
+            int j=0;
+            String in=sc.nextLine();
+            StringTokenizer st=new StringTokenizer(in);
+            while(st.hasMoreTokens())
+            {
+                String k=st.nextToken();
+                a[i][j]=Integer.parseInt(k);
+                j++;
+            }
+        }
+        int k=0;
+        int i=0,j=0;
+        int ph=0,ic=0;
+        while(k<(sz*sz))
+        {
+            if(ph==0)
+            {
+                cp[k]=a[i][j];
+                j++;
+                k++;
+                if(j==(sz-ic))
+                {
+                    ph++;
+                    j=sz-ic-1;
+                }
+            }
+            else if(ph==1)
+            {
+                i++;
+                cp[k]=a[i][j];
+                k++;
+                if(i==(sz-1-ic))
+                {
+                    ph++;
+                }
+            }
+            else if(ph==2)
+            {
+                j--;
+                cp[k]=a[i][j];
+                k++;
+                if(j==ic)
+                {
+                    ph++;
+                }
+            }
+            else if(ph==3)
+            {
+                i--;
+                cp[k]=a[i][j];
+                k++;
+                if(i==ic+1)
+                    ph++;
+            }
+            else
+            {
+                ic++;
+                ph=0;
+                i=ic;
+                j=ic;
+            }
+        }
+        int bit;
+        if(sz%2==0)
+            bit=0;
+        else
+            bit=1;
+        if(op.equals("CW")==true)
+        {
+            rotate(1,sz,bit);
+        }
+        else if(op.equals("CCW")==true)
+        {
+            rotate(0,sz,bit);
+        }
+        for(int m=0;m<sz;m++)
+        {
+            for(int n=0;n<sz;n++)
+            {
+                System.out.print(a[m][n]+" ");
+            }
+        }
+    }
+}
